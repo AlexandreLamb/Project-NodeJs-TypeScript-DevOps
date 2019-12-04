@@ -1,7 +1,7 @@
 export {}
 const { Schema, model } = require('mongoose');
 
-const name = 'User';
+const name = 'Metrics';
 
 const attributes = {
     email: {
@@ -21,8 +21,8 @@ const attributes = {
 
 const options = {};
 
-const UserSchema = new Schema(attributes, options);
+const MetricSchema = new Schema(attributes, options);
 
-const UserModel = model(name, UserSchema);
+const MetricModel = model(name, MetricSchema);
 
-module.exports = UserModel;
+module.exports = MetricModel;
