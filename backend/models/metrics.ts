@@ -1,22 +1,20 @@
 export {}
 const { Schema, model } = require('mongoose');
-
+const ObjectId = Schema.ObjectId;
 const name = 'Metrics';
 
 const attributes = {
-    email: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    username: {
+    timestamp: {
         type: String,
         required: true
     },
-    password: {
+    value: {
         type: String,
         required: true
-    } 
+    },
+    user:{
+        type: ObjectId
+    }
 };
 
 const options = {};
