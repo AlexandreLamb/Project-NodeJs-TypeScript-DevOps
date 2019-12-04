@@ -14,12 +14,13 @@ const router = Router();
  */
 
 // AUTH IMPORT
-const { RegisterUser } = require('./controllers');
+const { RegisterUser,LoginUser } = require('./controllers');
 
 /**
  * Routes
  */
 // AUTH ROUTES
 router.post('/register', RegisterUser);
+router.post('/login', LoginUser);
 
 module.exports = router;
