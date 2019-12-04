@@ -11,7 +11,6 @@ const generateToken = (cred) => {
                 id: cred.user_id,
             }
         };
-        console.log(process.env.JWT_SECRET_TOKEN);
         // We generate a JWT with credObject and return it
         const token = jwt.sign(jwtPayload, process.env.JWT_SECRET_TOKEN);
         return token;

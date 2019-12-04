@@ -59,7 +59,6 @@ const secure = async (req) => {
             value : inputs.value,
             userId : inputs.UserId
         }
-        console.log(metric)
         const newMetric = await MetricModel.create(metric);
         return newMetric;
     }catch(error) {

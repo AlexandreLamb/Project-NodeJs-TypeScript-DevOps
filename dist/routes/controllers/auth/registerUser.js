@@ -26,7 +26,6 @@ const { AuthServices } = require('../../../services/');
  * SECURE : Params and Body
  */
 const secure = (req) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     const inputs = {
         email: undefined,
         username: undefined,

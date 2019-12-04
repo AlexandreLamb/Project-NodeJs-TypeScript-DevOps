@@ -62,7 +62,6 @@ const process = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
             value: inputs.value,
             userId: inputs.UserId
         };
-        console.log(metric);
         const newMetric = yield MetricModel.create(metric);
         return newMetric;
     }
