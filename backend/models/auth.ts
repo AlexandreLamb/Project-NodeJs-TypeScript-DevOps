@@ -1,7 +1,7 @@
 export {}
 const { Schema, model } = require('mongoose');
 
-const name = 'User';
+const name = 'Auth';
 
 const attributes = {
     email: {
@@ -9,7 +9,7 @@ const attributes = {
         unique: true,
         required: true
     },
-    username: {
+    password: {
         type: String,
         required: true
     }
@@ -17,8 +17,8 @@ const attributes = {
 
 const options = {};
 
-const UserSchema = new Schema(attributes, options);
+const AuthSchema = new Schema(attributes, options);
 
-const UserModel = model(name, UserSchema);
+const AuthModel = model(name, AuthSchema);
 
-module.exports = UserModel;
+module.exports = AuthModel;
