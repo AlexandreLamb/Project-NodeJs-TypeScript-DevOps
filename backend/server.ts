@@ -1,3 +1,4 @@
+export{}
 /**
  * Module dependencies.
  */
@@ -5,7 +6,7 @@ require('dotenv').config();
 
 const http = require('http');
 const mongoose = require('mongoose');
-const App = require('./app');
+const app = require('./app');
 
 /**
  * Get environment variables from .env file.
@@ -32,7 +33,7 @@ mongoose.connect(`${mongoDbUri}/${mongoDbDatabase}`, { useNewUrlParser: true, us
  * Create HTTP server.
  */
 
-const server = http.createServer(App);
+const server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.

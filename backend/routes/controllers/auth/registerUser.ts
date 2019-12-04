@@ -1,7 +1,7 @@
 export {}
 const bcrypt = require('bcrypt');
-const { AuthModel, UserModel } = require('../../../models/index');
-const { formatChecker } = require('../../../core/helpers/formatChecker');
+const { AuthModel, UserModel } = require('../../../models');
+const { formatChecker } = require('../../../core');
 const { AuthServices } = require('../../../services/');
 
 /**
@@ -17,7 +17,9 @@ const { AuthServices } = require('../../../services/');
  * SECURE : Params and Body
  */
 const secure = async (req) => {
-
+    console.log(
+        req.body
+    )
     const inputs = {
         email : undefined,
         username : undefined,
