@@ -31,7 +31,7 @@ const secure = async (req) => {
   const process = async (inputs) => {
     try{
         const decodedToken = jwt.verify(inputs.token, dotenv.parsed.JWT_SECRET_TOKEN);
-        return  decodedToken;
+        console.log(  decodedToken);
     }  catch(error){
       throw new Error('invalid token'.concat(' > ', error.message));
     }
