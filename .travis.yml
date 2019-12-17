@@ -7,11 +7,9 @@ before_install:
 install:
 - npm install
 env:
-  - NODE_ENV=XXXX
-  - PORT=3030
-  - MONGODB_URI=mongodb://localhost:27017
-  - MONGODB_DATABASE=test  
-  - LENGTH_PASSWORD=8
-  - JWT_SECRET_TOKEN=sdjnkfnjfsdqnjfdsnjkldsqfljknfdsjnfd
+   MONGODB_URI=mongodb://localhost:27017
+   MONGODB_DATABASE=test
+   JWT_SECRET_TOKEN=faketoken
+  
 script:
 - npm run test
