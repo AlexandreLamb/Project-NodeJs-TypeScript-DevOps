@@ -14,7 +14,7 @@ const { middlewares } = require('../middlewares');
  */
 
 // AUTH IMPORT
-const { RegisterUser,LoginUser } = require('./controllers');
+const { RegisterUser,LoginUser,LogoutUser } = require('./controllers');
 
 // METRIC IMPORT
 const { CreateMetric,ReadMetric,UpdateMetric,DeleteMetric } = require('./controllers');
@@ -25,11 +25,12 @@ const { CreateMetric,ReadMetric,UpdateMetric,DeleteMetric } = require('./control
 // AUTH ROUTES
 router.post('/register', RegisterUser);
 router.post('/login', LoginUser);
+router.post('/logout',LogoutUser);
 
 // METRICS ROUTES
 router.post('/metrics/create',middlewares,CreateMetric);
-router.delete('/metrics/delete/:id',DeleteMetric);
-router.get('/metrics/read',ReadMetric);
-router.post('/metrics/update/:id',UpdateMetric);
+router.delete('/metrics/delete/:id',middlewares,DeleteMetric);
+router.get('/metrics/read',middlewares,ReadMetric);
+router.post('/metrics/update/:id',middlewares,UpdateMetric);
 
 module.exports = router;
