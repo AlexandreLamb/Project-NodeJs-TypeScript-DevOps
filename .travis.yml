@@ -8,6 +8,8 @@ install:
 - npm install
 env:
    MONGODB_URI=mongodb://localhost:27017
-   MONGODB_DATABASE=test  
+   MONGODB_DATABASE=test
+   JWT_SECRET_TOKEN= FAKETOKEN
+  
 script:
 - npm run test
