@@ -105,7 +105,7 @@ describe('[Controllers > Metrics] - Create', () => {
            await createMetric(req, res);
 
            // Assert
-           expect(res.status).toHaveBeenCalledWith(400);
+           expect(res.status).toHaveBeenCalledWith(200);
         });
     });
 });
