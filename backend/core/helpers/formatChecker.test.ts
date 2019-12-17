@@ -1,13 +1,9 @@
-const expect = require('chai').expect;
-const isEmail = (email) => {
-    const regex = /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/;
+const {isEmail, isPassword}  = require('./formatChecker')
 
-    return regex.test(email);
-};
-describe('[CASE-4] - isEmail ', () => {
+describe('[CASE-1] - isEmail ', () => {
     it('should return true', () => {
         // Arrange
-        const param = 'gui@gmail.com';
+        const param = 'al@gmail.com';
         // Act
         const result = isEmail(param);
         // Assert
@@ -15,10 +11,10 @@ describe('[CASE-4] - isEmail ', () => {
     });
 });
 
-describe('[CASE-5] - isEmail ', () => {
+describe('[CASE-2] - isEmail ', () => {
     it('should return true', () => {
         // Arrange
-        const param = 'gui@edu.ece.fr';
+        const param = 'al@edu.ece.fr';
         // Act
         const result = isEmail(param);
         // Assert
@@ -26,10 +22,10 @@ describe('[CASE-5] - isEmail ', () => {
     });
 });
 
-describe('[CASE-6] - isEmail ', () => {
+describe('[CASE-3] - isEmail ', () => {
     it('should return false', () => {
         // Arrange
-        const param = 'guiedu.fr';
+        const param = 'aledu.fr';
         // Act
         const result = isEmail(param);
         // Assert
@@ -37,12 +33,72 @@ describe('[CASE-6] - isEmail ', () => {
     });
 });
 
-describe('[CASE-7] - isEmail ', () => {
+describe('[CASE-4] - isEmail ', () => {
     it('should return false', () => {
         // Arrange
-        const param = 'gui@edufr';
+        const param = 'al@edufr';
         // Act
         const result = isEmail(param);
+        // Assert
+        expect(result).toBe(false);
+    });
+});
+describe('[CASE-5] - isPassword ', () => {
+    it('should return true', () => {
+        // Arrange
+        const param = 'Azerty1@';
+        // Act
+        const result = isPassword(param);
+        // Assert
+        expect(result).toBe(true);
+    });
+});
+describe('[CASE-6] - isPassword ', () => {
+    it('should return true', () => {
+        // Arrange
+        const param = '@1azertY';
+        // Act
+        const result = isPassword(param);
+        // Assert
+        expect(result).toBe(true);
+    });
+});
+describe('[CASE-7] - isPassword ', () => {
+    it('should return false', () => {
+        // Arrange
+        const param = 'azerty1@';
+        // Act
+        const result = isPassword(param);
+        // Assert
+        expect(result).toBe(false);
+    });
+});
+describe('[CASE-8] - isPassword ', () => {
+    it('should return false', () => {
+        // Arrange
+        const param = 'Azertyu@';
+        // Act
+        const result = isPassword(param);
+        // Assert
+        expect(result).toBe(false);
+    });
+});
+describe('[CASE-9] - isPassword ', () => {
+    it('should return false', () => {
+        // Arrange
+        const param = 'Azerty12';
+        // Act
+        const result = isPassword(param);
+        // Assert
+        expect(result).toBe(false);
+    });
+});
+describe('[CASE-10] - isPassword ', () => {
+    it('should return false', () => {
+        // Arrange
+        const param = 'Azer1@';
+        // Act
+        const result = isPassword(param);
         // Assert
         expect(result).toBe(false);
     });

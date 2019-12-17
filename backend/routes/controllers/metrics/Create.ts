@@ -6,7 +6,7 @@ const { MetricModel, AuthModel, UserModel } = require('../../../models');
  * req = { body: { 
  *             timestamp : String,
  *             value : String,
- *             email : String             
+ *             userEmail : String             
  *         } 
  * }
  * res = { json: { } }
@@ -31,6 +31,7 @@ const secure = async (req) => {
         throw new Error('Value undefined/null');
     }
     inputs.value = req.body.value;
+
     if (req.body.userEmail === undefined || req.body.userEmail === null) {
         throw new Error('Email undefined/null');
     }
@@ -69,7 +70,7 @@ const secure = async (req) => {
   /**
    * LOGIC :
    */
-  const createQuestion = async (req, res) => {
+  const createMetric = async (req, res) => {
     try {
       const inputs = await secure(req);
   
@@ -83,4 +84,4 @@ const secure = async (req) => {
       res.status(400).json({ message: error.message });
     }
   };
-  module.exports = createQuestion;
+  module.exports = createMetric;
