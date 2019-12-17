@@ -45,14 +45,11 @@ describe('[Controllers > Metrics] - Create', () => {
             const email = 'alex1@gmail.com';
             const timestamp = '1384686660000';
             const value = '666';
-            
-            
 
             // Act
            
-            const req = mockRequest(timestamp, value, email);
-           
-           const res = mockResponse();
+            const req = mockRequest(timestamp, value, email);           
+            const res = mockResponse();
 
             // Act
             await createMetric(req, res);
