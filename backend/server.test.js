@@ -1,9 +1,7 @@
 
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-//const describe  = require('mocha').describe();
-//const it = require('mocha').it();
-const expect = require('chai').expect;
+
 dotenv.config();
 
 describe('[Server]', () => {
@@ -14,7 +12,7 @@ describe('[Server]', () => {
             // Act
 
             // Assert
-            expect(process.env.MONGODB_URI).to.not.be.an('undefined');
+            expect(process.env.MONGODB_URI).not.toBeUndefined();
         });
     });
 
@@ -25,7 +23,7 @@ describe('[Server]', () => {
             // Act
 
             // Assert
-            expect(process.env.MONGODB_DATABASE).to.not.be.an('undefined');
+            expect(process.env.MONGODB_DATABASE).not.toBeUndefined();
         });
     });
 
@@ -43,7 +41,7 @@ describe('[Server]', () => {
             mongoose.connection.close();
 
             // Assert
-            expect(connectionState).to.equal(1);
+            expect(connectionState).toEqual(1);
         });
     });
 });
