@@ -7,7 +7,7 @@ before_install:
 install:
 - npm install
 env:
-  - MONGODB_URI=mongodb://localhost:27017
-  - MONGODB_DATABASE=test  
+   MONGODB_URI=mongodb://localhost:27017
+   MONGODB_DATABASE=test  
 script:
 - npm run test
