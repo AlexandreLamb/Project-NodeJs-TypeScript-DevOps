@@ -1,8 +1,8 @@
 export {}
-const { MetricModel } = require('../../../models');
+const { MetricModel, UserModel } = require('../../../models');
 /**
  * Request structure
- * req = { body: { } }
+ * req = { body: { "userEmail" } }
  * res = { json: [{ 
  *                  "_id": "string",
  *                  "timestamp" : "string",
@@ -16,9 +16,16 @@ const { MetricModel } = require('../../../models');
  * SECURE : Params and Body
  */
 const secure = async req => {
-    const inputs = {};
-  
-    return inputs;
+    const inputs = {
+      userEmail : undefined
+    };
+    
+    if (req.body.userEmail === undefined || req.body.userEmail === null) {
+      throw new Error('Email undefined/null');
+    }
+    inputs.userEmail = req.body.userEmail;
+
+  return inputs;
   };
   
   /**
@@ -26,7 +33,8 @@ const secure = async req => {
    */
   const process = async inputs => {
     try{
-      return MetricModel.find().exec();
+      const user = await UserModel.findOne({email : inputs.userEmail}).exec();
+      return await MetricModel.find({userId : user._id}).exec();
     }catch(error){
       throw new Error('Error Read Metric'.concat(' > ', error.message));
     }
