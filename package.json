@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch backend/*",
+    "test": "jest backend/*",
     "start": "./node_modules/.bin/ts-node backend/server.ts",
     "build": "./node_modules/.bin/tsc -p tsconfig.json",
     "dev": "./node_modules/.bin/nodemon backend/server.ts"
