@@ -1,5 +1,5 @@
 export {}
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { AuthModel, UserModel } = require('../../../models');
 const { formatChecker } = require('../../../core');
 const { AuthServices } = require('../../../services/');
