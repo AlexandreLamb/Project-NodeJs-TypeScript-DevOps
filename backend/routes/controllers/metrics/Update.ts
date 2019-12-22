@@ -3,8 +3,7 @@ const { MetricModel } = require('../../../models');
 /**
  * Request structure
  * req = { 
- *      params : {id : Number}
- *      body: {text:string, proposal_a:string, proposal_b:string, userId: string, lifeTime : mm/dd/yyyy } }
+ *      }
  * res = { json: { } }
  */
 
@@ -28,14 +27,11 @@ const secure = async (req) => {
         throw new Error('Value undefined/null');
     }
     inputs.value = req.body.value;
-    if (req.body.userEmail === undefined || req.body.userEmail === null) {
-        throw new Error('Email undefined/null');
-    }
-    inputs.userEmail = req.body.userEmail;
-    if (req.params.id === undefined || req.params.id === null) {
+
+    if (req.body.id === undefined || req.body.id === null) {
         throw new Error('Id undefined/null');
     }
-    inputs.id = req.params.id;
+    inputs.id = req.body.id;
 
     return inputs;
   };
@@ -61,11 +57,11 @@ const secure = async (req) => {
   
       const param = await process(inputs);
       
-        res.status(200).json(param);
+        res.status(200);
     } catch (error) {
       console.log("ERROR MESSAGE :", error.message);
       console.log("ERROR :", error);
-      res.status(400).json({ message: error.message });
+      res.status(400).redirect("api/index/metrics");
     }
   };
   module.exports = updateMetric;

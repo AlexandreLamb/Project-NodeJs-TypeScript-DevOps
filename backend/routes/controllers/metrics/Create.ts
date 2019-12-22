@@ -1,13 +1,17 @@
 export{
 }
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv').config();
 const { MetricModel, AuthModel, UserModel } = require('../../../models');
 /**
  * Request structure
  * req = { body: { 
  *             timestamp : String,
- *             value : String,
- *             userEmail : String             
+ *             value : String,          
  *         } 
+ *          cookie : {
+ *              userEmail : string
+ *            }
  * }
  * res = { json: { } }
  */
@@ -19,7 +23,7 @@ const secure = async (req) => {
     const inputs = {
         timestamp : undefined,
         value : undefined,
-        userEmail : undefined
+        token : undefined
     };
     
     if (req.body.timestamp === undefined || req.body.timestamp === null) {
@@ -31,11 +35,10 @@ const secure = async (req) => {
         throw new Error('Value undefined/null');
     }
     inputs.value = req.body.value;
-
-    if (req.body.userEmail === undefined || req.body.userEmail === null) {
-        throw new Error('Email undefined/null');
-    }
-    inputs.userEmail = req.body.userEmail;
+    if(req.headers.cookie === undefined || req.headers.cookie === null){
+        throw new Error("invalid cookie");
+      }
+      inputs.token =  req.headers.cookie.substring(6);
 
     return inputs;
   };
@@ -45,11 +48,14 @@ const secure = async (req) => {
    */
   const process = async (inputs) => {
       try{
-        const auth = await AuthModel.findOne({ email : inputs.userEmail });
+        const decodedToken = jwt.verify(inputs.token, dotenv.parsed.JWT_SECRET_TOKEN);
+        const userEmail = decodedToken.user.userEmail;
+
+        const auth = await AuthModel.findOne({ email : userEmail });
         if (auth === null || auth === undefined) {
             throw new Error('Auth : Email not find');
         }
-        const user = await UserModel.findOne({ email: inputs.userEmail });
+        const user = await UserModel.findOne({ email: userEmail });
         if (user === null || user === undefined) {
             throw new Error('User : Email not find');
         }
@@ -77,11 +83,11 @@ const secure = async (req) => {
       const param = await process(inputs);
 
   
-      res.status(200).json(param);
+      res.status(200).redirect("index/metrics")
     } catch (error) {
       console.log("ERROR MESSAGE :", error.message);
       console.log("ERROR :", error);
-      res.status(400).json({ message: error.message });
+      res.status(400).json({ message: error.message }).redirect('index/metrics');
     }
   };
   module.exports = createMetric;

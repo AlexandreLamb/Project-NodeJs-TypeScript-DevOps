@@ -33,8 +33,8 @@ router.get('/register',RegisterPage)
 
 // METRICS ROUTES
 router.post('/metrics/create',middlewares,CreateMetric);
-router.delete('/metrics/delete/:id',middlewares,DeleteMetric);
+router.post('/metrics/delete/:id',middlewares,DeleteMetric);
 router.get('/metrics/read',middlewares,ReadMetric);
-router.post('/metrics/update/:id',middlewares,UpdateMetric);
+router.post('/metrics/update',middlewares,UpdateMetric);
 router.get('/index/metrics/',middlewares,Index)
 module.exports = router;

@@ -1,4 +1,6 @@
 export {}
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv').config();
 const { MetricModel, UserModel } = require('../../../models');
 /**
  * Request structure
@@ -17,13 +19,14 @@ const { MetricModel, UserModel } = require('../../../models');
  */
 const secure = async req => {
     const inputs = {
-      userEmail : undefined
+      token : undefined
     };
     
-    if (req.body.userEmail === undefined || req.body.userEmail === null) {
-      throw new Error('Email undefined/null');
+    if(req.headers.cookie === undefined || req.headers.cookie === null){
+      throw new Error("invalid cookie");
     }
-    inputs.userEmail = req.body.userEmail;
+    inputs.token =  req.headers.cookie.substring(6);
+
 
   return inputs;
   };
@@ -33,7 +36,10 @@ const secure = async req => {
    */
   const process = async inputs => {
     try{
-      const user = await UserModel.findOne({email : inputs.userEmail}).exec();
+      const decodedToken = jwt.verify(inputs.token, dotenv.parsed.JWT_SECRET_TOKEN);
+      const userEmail = decodedToken.user.userEmail;
+      
+      const user = await UserModel.findOne({email : userEmail}).exec();
       return await MetricModel.find({userId : user._id}).exec();
     }catch(error){
       throw new Error('Error Read Metric'.concat(' > ', error.message));

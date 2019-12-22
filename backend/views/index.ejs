@@ -5,54 +5,100 @@
     <button class="btn btn-danger" type="submit">
         Logout
     </button>
+    <hr/>
 </form>
   <div id="form">
-  <p>Add Metrics</p>
-  <hr/>
-  <form action="/metrics" method="post">
+  <h1>Add Metrics</h1>
+  <form action="/api/metrics/create" method="post">
     <div class="form-group">
-        <label for="form_id">Id</label>
-        <input id="form_id" type="text" name="id" />
-      </div>
-    <div class="form-group">
+        <label for="form_timestamp">timestamp</label>
+        <input id="form_timestamp" type="text" name="timestamp" />
       <label for="form_value">Value</label>
       <input id="form_value" type="text" name="value" />
     </div>
-    <button class="btn btn-primary btn-block" type="submit" value="Submit">Add</button>
+    <button class="btn btn-primary" type="submit" value="Submit">Add</button>
   </form>
   <hr/>
 </div>
+<h1>Read metrics</h1>
 <button class="btn btn-success" id="show-metrics">
     Bring all the metrics
   </button>
-  <div id="metrics"></div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Timestamp</th>
+        <th scope="col">value</th>
+      </tr>
+    </thead>
+    <tbody id="metrics">
+
+    </tbody>
+</table>
   <hr/>
-  <button class="btn btn-success" id="show-metrics-id">
-    Bring all the metrics by id
+  <h1>Delete Metrics</h1>
+  <button class="btn btn-danger" id="delete-metrics-id">
+     Delete a metrics by id
   </button>
-  <label for="form_id_metrics">Id</label>
-    <input id="form_id_metrics" type="text" name="form_id_metrics" />
-  <div id="metrics-id"></div>
-</div>
+  <label for="form_delete_metrics">Id</label>
+    <input id="form_delete_metrics" type="text" name="form_delete_metrics" />
+    <hr/>
+    <div id="form-update">
+        <h1>Update Metrics</h1>
+        <form action="/api/metrics/update" method="post">
+          <div class="form-group">
+            <label for="form_update_id">id</label>
+            <input id="form_update_id" type="text" name="id" />
+              <label for="form_update_timestamp">timestamp</label>
+              <input id="form_update_timestamp" type="text" name="timestamp" />
+            <label for="form_update_value">Value</label>
+            <input id="form_update_value" type="text" name="value" />
+          </div>
+          <button class="btn btn-warning" type="submit" value="Submit">Update</button>
+        </form>
+        <hr/>
+      </div>
 
   <script>
   $('#show-metrics').click((e) => {
   e.preventDefault();
-  $.get("/metrics", {}, (data) => {
+  $('#metrics').empty();
+  $.get("/api/metrics/read", {}, (data) => {
     const content = data.map(d => {
-      return 'timestamp: '+d.timestamp+', value: '+d.value+'\n';
+        $('#metrics').append(
+            "<tr>"+
+                "<th scope='row'>"+d._id+"</th>"+
+                "<th >"+d.timestamp+"</th>"+
+                "<td>"+d.value+"</td>"+
+            "</tr>");
     })
-    $('#metrics').append(content.join("\n"));
+    
   });
 })
 $('#show-metrics-id').click((e) => {
-    console.log($('#form_id_metrics').val())
   e.preventDefault();
   $.get("/metrics/"+$('#form_id_metrics').val(), {}, (data) => {
     const content = data.map(d => {
       return 'timestamp: '+d.timestamp+', value: '+d.value+'\n';
     })
     $('#metrics-id').append(content.join("\n"));
+  });
+})
+$('#delete-metrics-id').click((e) => {
+  e.preventDefault();
+  $.post("/api/metrics/delete/"+$('#form_delete_metrics').val(), {}, () => {
+    $('#metrics').empty();
+    $.get("/api/metrics/read", {}, (data) => {
+    const content = data.map(d => {
+        $('#metrics').append(
+            "<tr>"+
+                "<th scope='row'>"+d._id+"</th>"+
+                "<th >"+d.timestamp+"</th>"+
+                "<td>"+d.value+"</td>"+
+            "</tr>");
+    })
+  });
   });
 })
 </script>

@@ -5,11 +5,8 @@ const jwt = require('jsonwebtoken');
 const generateToken = (cred) => {
     try {
         const jwtPayload = {
-            auth: {
-                id: cred._id,
-            },
             user: {
-                id: cred.user_id,
+                userEmail : cred.email
             }
         };
         // We generate a JWT with credObject and return it
