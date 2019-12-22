@@ -75,7 +75,7 @@ const loginUser = async (req, res) => {
         const token = await process(inputs);
         
         res.cookie('token',token,{ expires: new Date(Date.now() + 9000000000000), httpOnly: true });
-        res.status(200).json({token : token});
+        res.status(200).redirect("index/metrics")
     } catch (error) {
         console.log('ERROR MESSAGE :', error.message);
         console.log('ERROR :', error);
