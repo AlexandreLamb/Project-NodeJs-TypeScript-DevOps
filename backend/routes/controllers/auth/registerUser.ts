@@ -81,7 +81,7 @@ const registerUser = async (req, res) => {
     } catch (error) {
         console.log('ERROR MESSAGE :', error.message);
         console.log('ERROR :', error);
-        res.status(400).redi("register.ejs")
+        res.status(400).render("register.ejs")
     }
 };
 
