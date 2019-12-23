@@ -52,7 +52,9 @@ describe('[Controllers > Metrics] - Create', () => {
             // Arrange
             const timestamp = '1384686660000';
             const value = '666';
-            const cookie  = "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJFbWFpbCI6ImFsZXgxQGdtYWlsLmNvbSJ9LCJpYXQiOjE1NzcxMzc1OTd9.8mWQtCYJe0jgrTzUwU7bNqXzp_S8XvS7_pw9ocIDS6Y"
+            const auth =  await AuthModel.findOne({ email : "alex1@gmail.com" });
+            const token = AuthServices.generateToken(auth);
+            const cookie  = "token="+token;
             // Act
            
             const req = mockRequest(timestamp, value, cookie);           
