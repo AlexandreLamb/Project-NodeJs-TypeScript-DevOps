@@ -14,10 +14,12 @@ const mockRequest = (   usernameData = '', passwordData = '', emailData = '') =>
 const mockResponse = () => {
     const res = {
         status : jest.fn(),
-        json : jest.fn(),
+        render : jest.fn(),
+        redirect : jest.fn()
     };
     res.status = jest.fn().mockReturnValue(res);
-    res.json = jest.fn().mockReturnValue(res);
+    res.render = jest.fn().mockReturnValue(res);
+    res.redirect = jest.fn().mockReturnValue(res);
     return res;
 };
 beforeAll( async ()=>{
@@ -28,6 +30,8 @@ beforeAll( async ()=>{
     await mongoose.connect(`${mongoDbUri}/${mongoDbDatabase}`, {
         useNewUrlParser: true
     });
+   await mongoose.connection.db.dropDatabase();
+
 })
  describe('[Controllers > Auth] - Register User', () => {
     describe('Call with a good body', () => {

@@ -2,22 +2,28 @@
 export {}
 const mongoose = require('mongoose');
 const createMetric = require('./Create');
-const {UserModel, AuthModel } = require('../../../models')
-const mockRequest = (   timestampData = '', valueData = '', emailData = '') => ({
+const {UserModel, AuthModel } = require('../../../models');
+const AuthServices = require('../../../services/AuthServices');
+const mockRequest = (   timestampData = '', valueData = '', cookieData = '') => ({
     body: { 
-            userEmail : emailData,
             timestamp : timestampData,
             value  : valueData,
+        },
+        headers : {
+            cookie : cookieData,
         }
 });
 
 const mockResponse = () => {
     const res = {
         status : jest.fn(),
-        json : jest.fn(),
+        render : jest.fn(),
+        redirect : jest.fn()
+    
     };
     res.status = jest.fn().mockReturnValue(res);
-    res.json = jest.fn().mockReturnValue(res);
+    res.render = jest.fn().mockReturnValue(res);
+    res.redirect  = jest.fn().mockReturnValue(res);
     return res;
 };
 beforeAll(async () => {
@@ -27,7 +33,9 @@ beforeAll(async () => {
     await mongoose.connect(`${mongoDbUri}/${mongoDbDatabase}`, {
         useNewUrlParser: true
     });
-    await AuthModel.create({
+    await mongoose.connection.db.dropDatabase();
+
+    const auth = await AuthModel.create({
         "username" : "Simeon",
         "password" : "Azerty1&",
         "email" : "alex1@gmail.com"
@@ -42,13 +50,12 @@ describe('[Controllers > Metrics] - Create', () => {
     describe('Call with a good body', () => {
         it('should return status 200', async () => {
             // Arrange
-            const email = 'alex1@gmail.com';
             const timestamp = '1384686660000';
             const value = '666';
-
+            const cookie  = "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJFbWFpbCI6ImFsZXgxQGdtYWlsLmNvbSJ9LCJpYXQiOjE1NzcxMzc1OTd9.8mWQtCYJe0jgrTzUwU7bNqXzp_S8XvS7_pw9ocIDS6Y"
             // Act
            
-            const req = mockRequest(timestamp, value, email);           
+            const req = mockRequest(timestamp, value, cookie);           
             const res = mockResponse();
 
             // Act

@@ -77,11 +77,11 @@ const registerUser = async (req, res) => {
         const inputs = await secure(req);
 
         const token = await process(inputs);
-        res.status(200).redirect("/api/login");
+        res.status(200).redirect("api/login");
     } catch (error) {
         console.log('ERROR MESSAGE :', error.message);
         console.log('ERROR :', error);
-        res.status(400).render("register.ejs")
+        res.status(400).render("register.ejs");
     }
 };
 

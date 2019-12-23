@@ -83,11 +83,11 @@ const secure = async (req) => {
       const param = await process(inputs);
 
   
-      res.status(200).redirect("index/metrics")
+      res.status(200)
     } catch (error) {
       console.log("ERROR MESSAGE :", error.message);
       console.log("ERROR :", error);
-      res.status(400).redirect('index/metrics');
+      res.status(400)
     }
   };
   module.exports = createMetric;
