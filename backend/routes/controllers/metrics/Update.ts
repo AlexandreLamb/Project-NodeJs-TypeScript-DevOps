@@ -14,10 +14,9 @@ const secure = async (req) => {
     const inputs = {
         timestamp : undefined,
         value : undefined,
-        userEmail : undefined,
         id : undefined
     };
-    
+    console.log("here")
     if (req.body.timestamp === undefined || req.body.timestamp === null) {
         throw new Error('Timestamp undefined/null');
     }
@@ -41,6 +40,7 @@ const secure = async (req) => {
    */
   const process = async (inputs) => {
       try{
+        console.log("here")
         await MetricModel.updateOne({_id : inputs.id},inputs);
         return MetricModel.findOne({_id: inputs.id}).exec();
     }catch(error) {
@@ -53,11 +53,12 @@ const secure = async (req) => {
    */
   const updateMetric = async (req, res) => {
     try {
-      const inputs = await secure(req);
+        const inputs = await secure(req);
   
-      const param = await process(inputs);
-      
-        res.status(200);
+        await process(inputs);
+        console.log("here")
+
+        res.status(200).redirect("index/metrics");
     } catch (error) {
       console.log("ERROR MESSAGE :", error.message);
       console.log("ERROR :", error);

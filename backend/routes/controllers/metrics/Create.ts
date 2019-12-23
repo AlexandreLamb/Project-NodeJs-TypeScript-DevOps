@@ -87,7 +87,7 @@ const secure = async (req) => {
     } catch (error) {
       console.log("ERROR MESSAGE :", error.message);
       console.log("ERROR :", error);
-      res.status(400).json({ message: error.message }).redirect('index/metrics');
+      res.status(400).redirect('index/metrics');
     }
   };
   module.exports = createMetric;
