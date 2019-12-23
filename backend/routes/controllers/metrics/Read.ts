@@ -4,7 +4,7 @@ const dotenv = require('dotenv').config();
 const { MetricModel, UserModel } = require('../../../models');
 /**
  * Request structure
- * req = { body: { "userEmail" } }
+ * req = { header: { "token" } }
  * res = { json: [{ 
  *                  "_id": "string",
  *                  "timestamp" : "string",

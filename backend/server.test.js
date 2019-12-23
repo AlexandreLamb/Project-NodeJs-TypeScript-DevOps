@@ -38,7 +38,7 @@ describe('[Server]', () => {
                 useNewUrlParser: true
             });
             const connectionState = await mongoose.connection.readyState;
-            mongoose.connection.close();
+            await mongoose.connection.close();
 
             // Assert
             expect(connectionState).toEqual(1);

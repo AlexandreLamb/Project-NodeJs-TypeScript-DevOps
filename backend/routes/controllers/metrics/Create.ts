@@ -1,7 +1,7 @@
 export{
 }
+const dotenv = require('dotenv').config()
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv').config();
 const { MetricModel, AuthModel, UserModel } = require('../../../models');
 /**
  * Request structure
@@ -80,14 +80,12 @@ const secure = async (req) => {
     try {
       const inputs = await secure(req);
   
-      const param = await process(inputs);
-
-  
-      res.status(200)
+       await process(inputs);
+      res.status(200).redirect("index/metrics")	
     } catch (error) {
       console.log("ERROR MESSAGE :", error.message);
       console.log("ERROR :", error);
-      res.status(400)
+      res.status(400).redirect('index/metrics');
     }
   };
   module.exports = createMetric;

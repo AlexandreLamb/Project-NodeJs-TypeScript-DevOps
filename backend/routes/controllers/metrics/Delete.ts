@@ -42,11 +42,11 @@ const secure = async (req) => {
     try {
       const inputs = await secure(req);
       const param = await process(inputs);
-      res.status(200).json(param);
+      res.status(200).redirect('index/metrics');
     } catch (error) {
       console.log("ERROR MESSAGE :", error.message);
       console.log("ERROR :", error);
-      res.status(400).json({ message: error.message });
+      res.status(400).redirect('index/metrics');
     }
   };
   module.exports = deleteMetric;

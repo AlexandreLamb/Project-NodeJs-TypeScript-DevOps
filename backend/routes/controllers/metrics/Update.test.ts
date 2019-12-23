@@ -1,26 +1,27 @@
 
 export {}
 const mongoose = require('mongoose');
-const createMetric = require('./Create');
-const {UserModel, AuthModel } = require('../../../models');
-const AuthServices = require('../../../services/AuthServices');
-const mockRequest = (   timestampData = '', valueData = '', cookieData = '') => ({
+const updateMetric = require('./Update');
+const {UserModel, AuthModel,MetricModel } = require('../../../models');
+
+const mockRequest = (   timestampData = '', valueData = '', idData = '') => ({
     body: { 
             timestamp : timestampData,
             value  : valueData,
+            id : idData
         },
-        headers : {
-            cookie : cookieData,
-        }
+        
 });
 
 const mockResponse = () => {
     const res = {
+        json : jest.fn(),
         status : jest.fn(),
         render : jest.fn(),
         redirect : jest.fn()
     
     };
+    res.json = jest.fn().mockReturnValue(res);
     res.status = jest.fn().mockReturnValue(res);
     res.render = jest.fn().mockReturnValue(res);
     res.redirect  = jest.fn().mockReturnValue(res);
@@ -35,33 +36,26 @@ beforeAll(async () => {
     });
     await mongoose.connection.db.dropDatabase();
 
-    await AuthModel.create({
-        "username" : "Simeon",
-        "password" : "Azerty1&",
-        "email" : "alex1@gmail.com"
-    });
-    await UserModel.create({
-        "username" : "Simeon",
-        "password" : "Azerty1&",
-        "email" : "alex1@gmail.com"
-    });
+    await MetricModel.create({
+        timestamp : "test",
+        value : "test",
+        userId: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
+    })
   });
-describe('[Controllers > Metrics] - Create', () => {
+describe('[Controllers > Metrics] - Update', () => {
     describe('Call with a good body', () => {
         it('should return status 200', async () => {
             // Arrange
             const timestamp = '1384686660000';
             const value = '666';
-            const auth =  await AuthModel.findOne({ email : "alex1@gmail.com" });
-            const token = AuthServices.generateToken(auth);
-            const cookie  = "token="+token;
+            const metric  = await MetricModel.findOne({value : "test"}).exec();
             // Act
            
-            const req = mockRequest(timestamp, value, cookie);           
+            const req = mockRequest(timestamp, value, metric._id);           
             const res = mockResponse();
 
             // Act
-            await createMetric(req, res);
+            await updateMetric(req, res);
 
             // Assert
             expect(res.status).toHaveBeenCalledWith(200);
@@ -74,44 +68,25 @@ describe('[Controllers > Metrics] - Create', () => {
             const res = mockResponse();
            
             // Act
-            await createMetric(req, res);
+            await updateMetric(req, res);
 
             // Assert
             expect(res.status).toHaveBeenCalledWith(400);
         });
     });
-    describe('Call with bad email in body', () => {
+    describe('Call with bad id in body', () => {
         it('should return status 400', async () => {
            // Arrange
-           const email = 'email';
             const timestamp = '1384686660000';
             const value = '666';
+            const id = mongoose.Types.ObjectId('5edd40c86762e0fb12000003')
            
-           
-           const req = mockRequest(timestamp, value, email);
+           const req = mockRequest(timestamp, value, id);
           
           const res = mockResponse();
 
            // Act
-           await createMetric(req, res);
-
-           // Assert
-           expect(res.status).toHaveBeenCalledWith(400);
-        });
-    });
-    describe('Call with bad value in body', () => {
-        it('should return status 400', async () => {
-           // Arrange
-           const email = 'email';
-            const timestamp = '1384686660000';
-            const value = "";
-           
-           const req = mockRequest(timestamp, value, email);
-          
-          const res = mockResponse();
-
-           // Act
-           await createMetric(req, res);
+           await updateMetric(req, res);
 
            // Assert
            expect(res.status).toHaveBeenCalledWith(400);
@@ -119,7 +94,7 @@ describe('[Controllers > Metrics] - Create', () => {
     });
 });
 afterAll( async () => {
-   await mongoose.connection.db.dropDatabase();
-   await mongoose.connection.close();
+    await mongoose.connection.db.dropDatabase();
+    await mongoose.connection.close();
 
 })
