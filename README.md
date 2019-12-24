@@ -52,6 +52,27 @@ you can also use the app in docker container if you have docker and docker-compo
 docker-compose up
 ```
 ## API
+Route auth
+
+Register http://localhost:3030/api/register
+```bash
+req = { body: {
+   email:string,
+   username:string,
+   password:string
+  } }
+res = { json: {  } }
+```
+
+Login http://localhost:3030/api/login
+```bash
+req = { body: {
+   email:string,
+   password:string
+  } }
+res = { json: { token: 'xxxx' } }
+```
+
 Route metrics 
 
 Create http://localhost:3030/api/metrics/create
