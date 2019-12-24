@@ -3,6 +3,11 @@ const { MetricModel } = require('../../../models');
 /**
  * Request structure
  * req = { 
+ * body: { 
+              timestamp : String,
+              value : String,
+              id: String          
+          } 
  *      }
  * res = { json: { } }
  */
