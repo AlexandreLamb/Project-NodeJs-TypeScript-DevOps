@@ -48,6 +48,10 @@ const secure = async (req) => {
    */
   const process = async (inputs) => {
       try{
+        console.log("///////////////////////////////////////");
+        console.log(dotenv);
+        console.log("///////////////////////////////////////");
+
         const decodedToken = jwt.verify(inputs.token, dotenv.parsed.JWT_SECRET_TOKEN);
         const userEmail = decodedToken.user.userEmail;
 
