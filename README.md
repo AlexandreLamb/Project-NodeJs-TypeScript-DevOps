@@ -44,6 +44,15 @@ or just run the project in start mode with
 ```bash
 npm run start
 ```
+## Test 
+
+Jest is the framework use for the test, for testing the app you can run 
+
+```bash
+npm run test
+```
+Or you can checkout to branch ft/travis-docker and you have a container docker configure to run the test script in the travis environment but there is a litle probleme to fix, the container exit but when conatainer exit the travis doesn't exit, if you have an idea to execute the test on traviCi on a docker conatenaire please open an Issue or a Pull request ( See Contributing ) 
+the link to the [build](https://travis-ci.org/AlexandreLamb/Project-NodeJs-TypeScript-DevOps/builds/629150670) 
 
 ## Docker Usage
 you can also use the app in docker container if you have docker and docker-compose with 
