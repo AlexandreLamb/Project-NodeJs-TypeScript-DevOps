@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/AlexandreLamb/Project-NodeJs-TypeScript-DevOps.svg?branch=master)](https://travis-ci.org/AlexandreLamb/Project-NodeJs-TypeScript-DevOps)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-green.svg?style=flat-square)](#contributors-)
+
 # Projet NodeJs DevOps
 
 Simple app using nodejs express mongodb jest docker docker-compose travis 
@@ -127,6 +129,10 @@ res = { }
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
+
+## Contributors
+Lambert Alexandre
+Sartoris Louis
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
