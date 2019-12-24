@@ -124,6 +124,12 @@ req = { body: {
           }  }
 res = { } 
 ```
+## Difficulty
+First time for using docker and docker-compose in project so like all new there is some difficulty to use the technologie specially with travis, it was not easy to run the test in contenair on travis and still not working fine ( cf branch ft/travis-compose )
+
+The test route was little complicate because the env var dosen't want to load in travis or docker so solve the probleme with a config.js who export my var whose not loading
+
+Maybe an other one difficulty is the manage of the time and the labtop i have use have a too small screen 
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
