@@ -1,6 +1,6 @@
 export{
 }
-const dotenv = require('dotenv')
+const JWT_SECRET_TOKEN = require('../../../config');
 const jwt = require('jsonwebtoken');
 const { MetricModel, AuthModel, UserModel } = require('../../../models');
 /**
@@ -25,7 +25,6 @@ const secure = async (req) => {
         value : undefined,
         token : undefined
     };
-    
     if (req.body.timestamp === undefined || req.body.timestamp === null) {
         throw new Error('Timestamp undefined/null');
     }
@@ -48,11 +47,7 @@ const secure = async (req) => {
    */
   const process = async (inputs) => {
       try{
-        console.log("///////////////////////////////////////");
-        console.log(dotenv);
-        console.log("///////////////////////////////////////");
-
-        const decodedToken = jwt.verify(inputs.token, process.env.JWT_SECRET_TOKEN);
+        const decodedToken = jwt.verify(inputs.token, JWT_SECRET_TOKEN);
         const userEmail = decodedToken.user.userEmail;
 
         const auth = await AuthModel.findOne({ email : userEmail });
