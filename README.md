@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/AlexandreLamb/Project-NodeJs-TypeScript-DevOps.svg?branch=master)](https://travis-ci.org/AlexandreLamb/Project-NodeJs-TypeScript-DevOps)
 # Projet NodeJs DevOps
 
 Simple app using nodejs express mongodb jest docker docker-compose travis 
@@ -59,3 +60,4 @@ Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
