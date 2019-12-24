@@ -51,7 +51,47 @@ you can also use the app in docker container if you have docker and docker-compo
 ```bash
 docker-compose up
 ```
+## API
+Route metrics 
 
+Create http://localhost:3030/api/metrics/create
+```bash
+req = { body: { 
+              timestamp : String,
+              value : String,          
+          } 
+           cookie : {
+               userEmail : string
+             }
+  }
+  res = { }
+```
+Delete http://localhost:3030/api/metrics/delete/:id
+```bash
+req = { params : { id : string } }
+res = { } 
+```
+Read http://localhost:3030/api/metrics/read
+```bash
+req = { header: { "token" } }
+res = { json: [{ 
+                   "_id": "string",
+                   "timestamp" : "string",
+                   "value" : "string",
+                   "userId" : "string"
+                }] 
+  }
+```
+
+Update http://localhost:3030/api/metrics/update/:id
+```bash
+req = { body: { 
+              timestamp : String,
+              value : String, 
+              id : String
+          }  }
+res = { } 
+```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
