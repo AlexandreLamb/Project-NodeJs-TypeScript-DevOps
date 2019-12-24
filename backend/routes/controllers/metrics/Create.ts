@@ -1,6 +1,6 @@
 export{
 }
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv')
 const jwt = require('jsonwebtoken');
 const { MetricModel, AuthModel, UserModel } = require('../../../models');
 /**
@@ -52,7 +52,7 @@ const secure = async (req) => {
         console.log(dotenv);
         console.log("///////////////////////////////////////");
 
-        const decodedToken = jwt.verify(inputs.token, dotenv.parsed.JWT_SECRET_TOKEN);
+        const decodedToken = jwt.verify(inputs.token, process.env.JWT_SECRET_TOKEN);
         const userEmail = decodedToken.user.userEmail;
 
         const auth = await AuthModel.findOne({ email : userEmail });
