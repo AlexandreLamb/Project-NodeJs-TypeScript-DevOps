@@ -1,5 +1,6 @@
 export {}
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv').config()
 const JWT_SECRET_TOKEN = require('../../../config');
 const { MetricModel, UserModel } = require('../../../models');
 /**

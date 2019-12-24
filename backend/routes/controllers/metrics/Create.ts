@@ -1,7 +1,9 @@
 export{
 }
-const JWT_SECRET_TOKEN = require('../../../config');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv').config()
+const JWT_SECRET_TOKEN = require('../../../config');
+
 const { MetricModel, AuthModel, UserModel } = require('../../../models');
 /**
  * Request structure
