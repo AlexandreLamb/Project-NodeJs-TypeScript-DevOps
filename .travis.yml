@@ -9,7 +9,7 @@ install:
 env:
    MONGODB_URI=mongodb://localhost:27017
    MONGODB_DATABASE=test
-   JWT_SECRET_TOKEN="faketoken"
+   JWT_SECRET_TOKEN=AZERTGVSGZUIADIUAZHDUAZBDBAZYUDAZDYBAZ
   
 script:
 - npm run test
