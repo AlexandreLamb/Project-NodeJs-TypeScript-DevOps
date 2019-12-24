@@ -1,15 +1,28 @@
 language: node_js
 node_js:
 - "node"
-services: mongodb
+services: 
+   - mongodb
+   - docker
 before_install:
-- npm update
-install:
-- npm install
+   #
+   # INSTLATION DOCKER-COMPOSE (Version 1.24.1)
+   #
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+   #
+   # DOWNLOAD DOCKER IMAGE AND RUN
+   #
+  - docker pull simeon92/project .
+  - docker run -d simeon92/project /bin/sh -c "cd /root/project; bundle exec foreman start;"
+  - docker ps -a
+  - docker run simeon92/project /bin/sh -c "cd /root/project; bundle exec rake test"
+
 env:
    MONGODB_URI=mongodb://localhost:27017
    MONGODB_DATABASE=test
    JWT_SECRET_TOKEN=FAKETOKEN
+ - DOCKER_COMPOSE_VERSION=1.24.1
   
-script:
-- npm run test
