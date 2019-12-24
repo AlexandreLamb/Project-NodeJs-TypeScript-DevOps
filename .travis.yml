@@ -15,7 +15,6 @@ before_install:
    #
    # DOWNLOAD DOCKER IMAGE AND RUN
    #
-  - docker pull simeon92/project
   - docker-compose up
 
 env:
