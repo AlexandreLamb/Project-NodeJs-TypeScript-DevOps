@@ -1,11 +1,11 @@
 
 export {}
 const mongoose = require('mongoose');
-const registerUser = require('./registerUser');
-
-const mockRequest = (   usernameData = '', passwordData = '', emailData = '') => ({
+const loginUser = require('./loginUser');
+const {AuthModel,UserModel} = require('../../../models')
+const bcrypt = require('bcryptjs')
+const mockRequest = ( passwordData = '', emailData = '') => ({
     body: { 
-        username : usernameData,
         password : passwordData,
         email : emailData
         }
@@ -15,39 +15,52 @@ const mockResponse = () => {
     const res = {
         status : jest.fn(),
         render : jest.fn(),
-        redirect : jest.fn()
+        redirect : jest.fn(),
+        cookie : jest.fn()
     };
     res.status = jest.fn().mockReturnValue(res);
     res.render = jest.fn().mockReturnValue(res);
     res.redirect = jest.fn().mockReturnValue(res);
+    res.cookie = jest.fn().mockReturnValue(res);
     return res;
 };
 beforeAll( async ()=>{
-    const port = process.env.PORT || 3030;
-    const mongoDbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-    const mongoDbDatabase = process.env.MONGODB_DATABASE || 'metrics';
+    const mongoDbUri =  'mongodb://localhost:27017';
+    const mongoDbDatabase = 'test';
+
     // Act
     await mongoose.connect(`${mongoDbUri}/${mongoDbDatabase}`, {
         useNewUrlParser: true
     });
    await mongoose.connection.db.dropDatabase();
+    
+   const password = await bcrypt.hash("Password123&", 10);
+
+   await AuthModel.create({
+    "username" : "Simeon",
+    "password" : password,
+    "email" : "alex5@gmail.com"
+    });
+    await UserModel.create({
+    "username" : "Simeon",
+    "password" : password,
+    "email" : "alex5@gmail.com"
+    });
 
 })
- describe('[Controllers > Auth] - Register User', () => {
+ describe('[Controllers > Auth] - Login User', () => {
     describe('Call with a good body', () => {
         it('should return status 200', async () => {
             // Arrange
             const email = 'alex5@gmail.com';
-            const username = 'Simeon';
-            const password = 'Password123&';
+            const password = 'Password123&';            
             
-            
-            const req = mockRequest(username, password, email);
+            const req = mockRequest(password, email);
            
-           const res = mockResponse();
+            const res = mockResponse();
 
             // Act
-            await registerUser(req, res);
+            await loginUser(req, res);
 
             // Assert
             expect(res.status).toHaveBeenCalledWith(200);
@@ -61,7 +74,7 @@ beforeAll( async ()=>{
             const res = mockResponse();
 
             // Act
-            await registerUser(req, res);
+            await loginUser(req, res);
 
             // Assert
             expect(res.status).toHaveBeenCalledWith(400);
@@ -75,11 +88,11 @@ beforeAll( async ()=>{
             const username = 'Simeon';
             const password = 'Password123&';
             
-            const req = mockRequest(username, password, email);
+            const req = mockRequest(password, email);
             const res = mockResponse();
 
             // Act
-            await registerUser(req, res);
+            await loginUser(req, res);
 
             // Assert
             expect(res.status).toHaveBeenCalledWith(400);
@@ -90,14 +103,13 @@ beforeAll( async ()=>{
             // Arrange
             
             const email = 'alex5@gmail.com';
-            const username = 'Simeon';
             const password = 'Password123';
             
-            const req = mockRequest(username, password, email);
+            const req = mockRequest(password, email);
             const res = mockResponse();
 
             // Act
-            await registerUser(req, res);
+            await loginUser(req, res);
 
             // Assert
             expect(res.status).toHaveBeenCalledWith(400);

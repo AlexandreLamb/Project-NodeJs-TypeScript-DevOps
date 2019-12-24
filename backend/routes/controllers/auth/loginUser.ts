@@ -34,7 +34,6 @@ const secure = async (req) => {
         throw new Error('Password don\'t follow rules');
     }
     inputs.password = req.body.password;
-
     return inputs;
 };
 
@@ -52,7 +51,6 @@ const process = async (inputs) => {
         if (user === null || user === undefined) {
             throw new Error('User : Email not find');
         }
-
         const isGoodPassword = await bcrypt.compare(inputs.password, auth.password);
         if (!isGoodPassword) {
             throw new Error('Wrong Password');

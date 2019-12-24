@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const readMetric = require('./Read');
 const {UserModel, AuthModel } = require('../../../models');
 const AuthServices = require('../../../services/AuthServices');
+
 const mockRequest = ( cookieData = '') => ({
         headers : {
             cookie : cookieData,
@@ -25,9 +26,10 @@ const mockResponse = () => {
     return res;
 };
 beforeAll(async () => {
-    const mongoDbUri =  'mongodb://localhost:27017';
-    const mongoDbDatabase = 'test';
-
+    const port = process.env.PORT || 3030;
+    const mongoDbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+    const mongoDbDatabase = process.env.MONGODB_DATABASE || 'metrics';
+    
     await mongoose.connect(`${mongoDbUri}/${mongoDbDatabase}`, {
         useNewUrlParser: true
     });

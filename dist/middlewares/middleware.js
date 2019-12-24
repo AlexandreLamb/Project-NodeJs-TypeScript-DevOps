@@ -58,7 +58,7 @@ const middlewares = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     catch (error) {
         console.log("ERROR MESSAGE :", error.message);
         console.log("ERROR :", error);
-        res.status(401).json({ message: error.message });
+        res.status(401).redirect('/api/login');
     }
 });
 module.exports = middlewares;

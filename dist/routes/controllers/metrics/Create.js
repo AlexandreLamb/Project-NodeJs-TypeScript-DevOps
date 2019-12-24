@@ -9,14 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const JWT_SECRET_TOKEN = require('../../../config');
+const jwt = require('jsonwebtoken');
 const { MetricModel, AuthModel, UserModel } = require('../../../models');
 /**
  * Request structure
  * req = { body: {
  *             timestamp : String,
  *             value : String,
- *             email : String
  *         }
+ *          cookie : {
+ *              userEmail : string
+ *            }
  * }
  * res = { json: { } }
  */
@@ -27,7 +31,7 @@ const secure = (req) => __awaiter(void 0, void 0, void 0, function* () {
     const inputs = {
         timestamp: undefined,
         value: undefined,
-        userEmail: undefined
+        token: undefined
     };
     if (req.body.timestamp === undefined || req.body.timestamp === null) {
         throw new Error('Timestamp undefined/null');
@@ -37,10 +41,10 @@ const secure = (req) => __awaiter(void 0, void 0, void 0, function* () {
         throw new Error('Value undefined/null');
     }
     inputs.value = req.body.value;
-    if (req.body.userEmail === undefined || req.body.userEmail === null) {
-        throw new Error('Email undefined/null');
+    if (req.headers.cookie === undefined || req.headers.cookie === null) {
+        throw new Error("invalid cookie");
     }
-    inputs.userEmail = req.body.userEmail;
+    inputs.token = req.headers.cookie.substring(6);
     return inputs;
 });
 /**
@@ -48,11 +52,13 @@ const secure = (req) => __awaiter(void 0, void 0, void 0, function* () {
  */
 const process = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const auth = yield AuthModel.findOne({ email: inputs.userEmail });
+        const decodedToken = jwt.verify(inputs.token, JWT_SECRET_TOKEN);
+        const userEmail = decodedToken.user.userEmail;
+        const auth = yield AuthModel.findOne({ email: userEmail });
         if (auth === null || auth === undefined) {
             throw new Error('Auth : Email not find');
         }
-        const user = yield UserModel.findOne({ email: inputs.userEmail });
+        const user = yield UserModel.findOne({ email: userEmail });
         if (user === null || user === undefined) {
             throw new Error('User : Email not find');
         }
@@ -72,16 +78,16 @@ const process = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
 /**
  * LOGIC :
  */
-const createQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createMetric = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const inputs = yield secure(req);
-        const param = yield process(inputs);
-        res.status(200).json(param);
+        yield process(inputs);
+        res.status(200).redirect("index/metrics");
     }
     catch (error) {
         console.log("ERROR MESSAGE :", error.message);
         console.log("ERROR :", error);
-        res.status(400).json({ message: error.message });
+        res.status(400).redirect('index/metrics');
     }
 });
-module.exports = createQuestion;
+module.exports = createMetric;
