@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { AuthModel, UserModel } = require('../../../models');
 const { formatChecker } = require('../../../core');
 const { AuthServices } = require('../../../services/');
@@ -79,12 +79,12 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const inputs = yield secure(req);
         const token = yield process(inputs);
-        res.status(200).json({ token });
+        res.status(200).redirect("api/login");
     }
     catch (error) {
         console.log('ERROR MESSAGE :', error.message);
         console.log('ERROR :', error);
-        res.status(400).json({ 'message': error.message });
+        res.status(400).render("register.ejs");
     }
 });
 module.exports = registerUser;

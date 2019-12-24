@@ -1,15 +1,22 @@
 language: node_js
 node_js:
 - "node"
-services: mongodb
+services: 
+   - mongodb
+   - docker
 before_install:
-- npm update
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - npm update
 install:
 - npm install
 env:
    MONGODB_URI=mongodb://localhost:27017
    MONGODB_DATABASE=test
    JWT_SECRET_TOKEN=FAKETOKEN
+ - DOCKER_COMPOSE_VERSION=1.24.1
   
 script:
 - npm run test
