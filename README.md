@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/AlexandreLamb/Project-NodeJs-TypeScript-DevOps.svg?branch=master)](https://travis-ci.org/AlexandreLamb/Project-NodeJs-TypeScript-DevOps)
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-green.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-green.svg?style=flat-square)](#contributors)
 
 # Projet NodeJs DevOps
 
