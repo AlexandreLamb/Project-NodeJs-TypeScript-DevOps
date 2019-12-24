@@ -22,7 +22,7 @@ describe('[Server]', () => {
 
             // Act
             console.log("///////////////////////////////////////");
-        console.log(process.env);
+        console.log(dotenv);
         console.log("///////////////////////////////////////");
 
             // Assert
