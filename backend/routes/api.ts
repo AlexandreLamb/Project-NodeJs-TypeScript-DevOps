@@ -1,3 +1,4 @@
+export{}
 const { Router } = require('express');
 
 const router = Router();
@@ -14,10 +15,10 @@ const { middlewares } = require('../middlewares');
  */
 
 // AUTH IMPORT
-const { RegisterUser,LoginUser,LogoutUser } = require('./controllers');
+const { RegisterUser,RegisterPage,LoginUser,LogoutUser,LoginPage} = require('./controllers');
 
 // METRIC IMPORT
-const { CreateMetric,ReadMetric,UpdateMetric,DeleteMetric } = require('./controllers');
+const { CreateMetric,ReadMetric,UpdateMetric,DeleteMetric,Index } = require('./controllers');
 
 /**
  * Routes
@@ -27,10 +28,13 @@ router.post('/register', RegisterUser);
 router.post('/login', LoginUser);
 router.post('/logout',LogoutUser);
 
+router.get('/login',LoginPage);
+router.get('/register',RegisterPage)
+
 // METRICS ROUTES
 router.post('/metrics/create',middlewares,CreateMetric);
-router.delete('/metrics/delete/:id',middlewares,DeleteMetric);
+router.post('/metrics/delete/:id',middlewares,DeleteMetric);
 router.get('/metrics/read',middlewares,ReadMetric);
-router.post('/metrics/update/:id',middlewares,UpdateMetric);
-
+router.post('/metrics/update',middlewares,UpdateMetric);
+router.get('/index/metrics/',middlewares,Index)
 module.exports = router;

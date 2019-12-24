@@ -1,5 +1,5 @@
 export{}
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { AuthModel, UserModel } = require('../../../models');
 const { formatChecker } = require('../../../core');
 const { AuthServices } = require('../../../services');
@@ -14,6 +14,7 @@ const { AuthServices } = require('../../../services');
 /**
  * SECURE : Params and Body
  */
+/*
 const secure = async (req) => {
 
     const inputs = {
@@ -33,6 +34,7 @@ const secure = async (req) => {
 /**
  * PROCESS :
  */
+/*
 const process = async (inputs) => {
     try {
         const auth = await AuthModel.findOne({ email: inputs.email });
@@ -51,15 +53,15 @@ const process = async (inputs) => {
         throw new Error('Error login'.concat(' > ', error.message));
     }
 };
-
+*/
 const logoutUser = async (req, res) => {
     try {
-        const inputs = await secure(req);
+       // const inputs = await secure(req);
         
-        const token = await process(inputs);
+       // const token = await process(inputs);
         
-        res.cookie('token',token);
-        res.status(200).json({token : token});
+        res.cookie('token',null);
+        res.status(200).redirect('/api/login');
     } catch (error) {
         console.log('ERROR MESSAGE :', error.message);
         console.log('ERROR :', error);

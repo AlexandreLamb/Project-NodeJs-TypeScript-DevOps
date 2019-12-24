@@ -1,5 +1,5 @@
 export {}
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { AuthModel, UserModel } = require('../../../models');
 const { formatChecker } = require('../../../core');
 const { AuthServices } = require('../../../services/');
@@ -77,11 +77,11 @@ const registerUser = async (req, res) => {
         const inputs = await secure(req);
 
         const token = await process(inputs);
-        res.status(200).json({ token });
+        res.status(200).redirect("api/login");
     } catch (error) {
         console.log('ERROR MESSAGE :', error.message);
         console.log('ERROR :', error);
-        res.status(400).json({ 'message': error.message });
+        res.status(400).render("register.ejs");
     }
 };
 

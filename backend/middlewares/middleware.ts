@@ -31,6 +31,7 @@ const secure = async (req) => {
   const process = async (inputs) => {
     try{
         const decodedToken = jwt.verify(inputs.token, dotenv.parsed.JWT_SECRET_TOKEN);
+        return decodedToken;
     }  catch(error){
       throw new Error('invalid token'.concat(' > ', error.message));
     }
@@ -51,7 +52,7 @@ const secure = async (req) => {
     } catch (error) {
       console.log("ERROR MESSAGE :", error.message);
       console.log("ERROR :", error);
-      res.status(401).json({ message: error.message });
+      res.status(401).redirect('/api/login');
     }
   };
   module.exports = middlewares;

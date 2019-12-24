@@ -21,6 +21,9 @@ describe('[Server]', () => {
             // Arrange
 
             // Act
+            console.log("///////////////////////////////////////");
+        console.log(dotenv);
+        console.log("///////////////////////////////////////");
 
             // Assert
             expect(process.env.MONGODB_DATABASE).not.toBeUndefined();
@@ -38,7 +41,7 @@ describe('[Server]', () => {
                 useNewUrlParser: true
             });
             const connectionState = await mongoose.connection.readyState;
-            mongoose.connection.close();
+            await mongoose.connection.close();
 
             // Assert
             expect(connectionState).toEqual(1);
