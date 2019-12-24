@@ -75,9 +75,7 @@ describe('[Controllers > Metrics] - Delete', () => {
            // Arrange
            
             const id = mongoose.Types.ObjectId('5edd40c86762e0fb12000003')
-           
             const req = mockRequest(id);
-          
             const res = mockResponse();
 
            // Act

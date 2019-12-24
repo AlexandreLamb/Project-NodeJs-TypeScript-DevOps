@@ -26,8 +26,11 @@ const secure = async (req) => {
     }
     inputs.value = req.body.value;
 
-    if (req.body.id === undefined || req.body.id === null) {
+    if (req.body.id === undefined || req.body.id === null || req.body.id === "") {
         throw new Error('Id undefined/null');
+    }
+    else if( await MetricModel.findById({_id: req.body.id}).exec() === null ){
+        throw new Error('Metric not exist');
     }
     inputs.id = req.body.id;
 
@@ -40,7 +43,6 @@ const secure = async (req) => {
   const process = async (inputs) => {
       try{
         await MetricModel.updateOne({_id : inputs.id},inputs);
-        return MetricModel.findOne({_id: inputs.id}).exec();
     }catch(error) {
           throw new Error('Metric  can\'t be update'.concat(' > ', error.message));
       }

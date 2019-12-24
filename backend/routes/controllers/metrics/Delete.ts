@@ -13,13 +13,12 @@ const secure = async (req) => {
     const inputs = {
       id: undefined
     };
-    if(req.params.id === undefined || req.params.id === null){
+    if(req.params.id === undefined || req.params.id === null || req.params.id === ""){
         throw new Error('Id is null or undefined');
-    } else if( MetricModel.findById({_id: inputs.id})===null ){
+    } else if( await MetricModel.findById({_id: req.params.id}).exec()===null ){
         throw new Error('Metric already delete');
     }
     inputs.id = req.params.id;
-
     return inputs;
   };
   
@@ -28,6 +27,7 @@ const secure = async (req) => {
    */
   const process = async (inputs) => {
     try{
+      console.log(inputs)
       return MetricModel.findByIdAndRemove({_id: inputs.id}).exec();
     }
     catch(error){

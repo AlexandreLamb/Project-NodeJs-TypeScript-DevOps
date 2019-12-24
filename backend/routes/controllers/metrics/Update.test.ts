@@ -48,9 +48,8 @@ describe('[Controllers > Metrics] - Update', () => {
             // Arrange
             const timestamp = '1384686660000';
             const value = '666';
-            const metric  = await MetricModel.findOne({value : "test"}).exec();
+            const metric = await MetricModel.findOne({value: 'test'}).exec()
             // Act
-           
             const req = mockRequest(timestamp, value, metric._id);           
             const res = mockResponse();
 
