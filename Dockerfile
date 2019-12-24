@@ -10,6 +10,4 @@ COPY . .
 
 EXPOSE 3030 
 
-RUN npm install -g nodemon 
-
-CMD [ "npm", "run", "populate" ] 
+CMD [ "npm","run","test" ]

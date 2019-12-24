@@ -12,7 +12,7 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
    #
-   # DOWNLOAD DOCKER IMAGE AND RUN
+   # BUILD AND RUN CONTERNAIRE
    #
   - docker-compose up
 
