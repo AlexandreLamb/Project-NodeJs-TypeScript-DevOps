@@ -6,7 +6,10 @@ services:
     - MONGODB_URI=mongodb://mongo:27017
     - MONGODB_DATABASE=metrics_docker
     - PORT=3030
-    restart: always
+    - JWT_SECRET_TOKEN=FAKETOKEN
+    deploy:
+      restart_policy:
+        condition: on-failure
     build: ./
     ports:
       - "3030:3030"
