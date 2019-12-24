@@ -21,6 +21,9 @@ describe('[Server]', () => {
             // Arrange
 
             // Act
+            console.log("///////////////////////////////////////");
+        console.log(process.env);
+        console.log("///////////////////////////////////////");
 
             // Assert
             expect(process.env.MONGODB_DATABASE).not.toBeUndefined();
