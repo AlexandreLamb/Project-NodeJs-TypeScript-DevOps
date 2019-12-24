@@ -15,7 +15,7 @@ before_install:
    #
    # DOWNLOAD DOCKER IMAGE AND RUN
    #
-  - docker pull simeon92/project .
+  - docker pull simeon92/project
   - docker run -d simeon92/project /bin/sh -c "cd /root/project; bundle exec foreman start;"
   - docker ps -a
   - docker run simeon92/project /bin/sh -c "cd /root/project; bundle exec rake test"
