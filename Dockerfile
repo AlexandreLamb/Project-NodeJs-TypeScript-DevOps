@@ -12,4 +12,4 @@ EXPOSE 3030
 
 RUN npm install -g nodemon 
 
-CMD [ "nodemon", "backend/server.ts" ] 
+CMD [ "npm", "run", "populate" ] 
