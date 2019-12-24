@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 3030 
 
-CMD [ "npm","run","start" ]
+RUN npm install -g nodemon 
+
+CMD [ "nodemon", "backend/server.ts" ] 
